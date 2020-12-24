@@ -20,9 +20,9 @@ This script will also set the root domain, if a value is passed as an argument t
 $ ./setup.sh example.com
 ```
 
-### Build containers
+### Build Containers
 
-Both the Custom Node-RED and the management containers need building and pushing to your local container registry.
+Both the Custom Node-RED and the management containers need building and pushing to your local private container registry.
 
 ```
 $ docker build -t private.example.com/custom-node-red ./manager
@@ -38,6 +38,9 @@ $ docker push private.example.com/k8s-manager
 
 Once this is done you will need to edit the `deployment/deployment.yml` and `manager/config/settings.js` file to update management container path and the custom-node-red path respectively.
 
+#### Regstiry Container
+
+When running on a AMD64 based host everything should be fine, if you want to run on ARM64 then you  will need to rebuild the verdaccio/verdaccio container as they only ship AMD64 versions. You will need to modify the `deployment/deployment.yml` to point to the local build on your private container registry.
 
 ## Deploying
 

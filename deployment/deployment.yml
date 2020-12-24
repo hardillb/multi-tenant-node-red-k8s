@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: node-red-multi
+  name: node-red-multi-tenant
   labels:
     app: nr-mt
 spec:
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: node-red-manager
-        image: docker-pi.local:5000/k8s-manager
+        image: private.example.com/k8s-manager
         ports:
         - containerPort: 3000
         volumeMounts:
@@ -38,6 +38,9 @@ spec:
         image: verdaccio/verdaccio
         ports:
         - containerPort: 4873
+        volumeMounts:
+        - name: registry-data
+          mountPath: /verdaccio/conf
       volumes:
       - name: secret
         secret:
@@ -45,4 +48,8 @@ spec:
       - name: mongo-data
         hostPath:
           path: /opt/mongo-data
+          type: Directory
+      - name: registry-data
+        hostPath:
+          path: /opt/registry-data
           type: Directory
