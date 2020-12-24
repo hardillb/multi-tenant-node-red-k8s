@@ -14,9 +14,9 @@ fi
 
 if [ -z "$2" ]
 then
-	reg=$2
+	reg=private.example.com
 else
-	reg=""
+	reg=$2
 fi
 
 sed -i -e "s/private.example.com/$reg/g" deployment/deployment.yml
