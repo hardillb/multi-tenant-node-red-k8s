@@ -40,6 +40,8 @@ spec:
         - containerPort: 4873
         volumeMounts:
         - name: registry-data
+          mountPath: /verdaccio/storage
+        - name: registry-conf
           mountPath: /verdaccio/conf
       volumes:
       - name: secret
@@ -53,3 +55,6 @@ spec:
         hostPath:
           path: /opt/registry-data
           type: Directory
+      - name: registry-conf
+        secret:
+          secretName: registry-conf

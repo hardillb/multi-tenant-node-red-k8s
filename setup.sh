@@ -5,6 +5,11 @@ kubectl create secret generic kube-config \
   --from-file=settings.js=`readlink -f manager/config/settings.js` \
   --dry-run=client --output=yaml > deployment/secret.yml
 
+ kubectl create secret generic registry-conf \
+   --from-file=config.yaml=`readlink -f registry/config.yaml` \
+   --from-file=htpasswd=`readlink -f registry/htpasswd` \
+   --dry-run=client --output=yaml > deployment/registry-conf.yml
+
 if [ -z "$1" ]
 then
 	rd=`hostname`.local
