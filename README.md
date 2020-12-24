@@ -14,10 +14,13 @@ $ git clone --recurse-submodules https://github.com/hardillb/multi-tenant-node-r
 
 Running `./setup.sh` in the root directory of the project will generate a `deployment/secret.yml` file that holds the details for connecting to the Kubernetes API and and the `settings.js` for the management app.
 
-This script will also set the root domain, if a value is passed as an argument to the script it will use this, otherwise it will use the current hostname with `.local` appened
+The script takes 2 arguments
+
+ - The first is the root domain that will be instance names will be appended to
+ - The second is the host (and optional port) for the local container repository
 
 ```
-$ ./setup.sh example.com
+$ ./setup.sh example.com private.example.com:5000
 ```
 
 ### Build Containers
@@ -25,22 +28,33 @@ $ ./setup.sh example.com
 Both the Custom Node-RED and the management containers need building and pushing to your local private container registry.
 
 ```
-$ docker build -t private.example.com/custom-node-red ./manager
+$ docker build -t private.example.com:5000/custom-node-red ./manager
 ...
-$ docker push private.example.com/custom-node-red
+$ docker push private.example.com:5000/custom-node-red
 ```
 and
 ```
-$ docker build -t private.example.com/k8s-manager ./manager
+$ docker build -t private.example.com:5000/k8s-manager ./manager
 ...
-$ docker push private.example.com/k8s-manager
+$ docker push private.example.com:5000/k8s-manager
 ```
-
-Once this is done you will need to edit the `deployment/deployment.yml` and `manager/config/settings.js` file to update management container path and the custom-node-red path respectively.
 
 #### Regstiry Container
 
-When running on a AMD64 based host everything should be fine, if you want to run on ARM64 then you  will need to rebuild the verdaccio/verdaccio container as they only ship AMD64 versions. You will need to modify the `deployment/deployment.yml` to point to the local build on your private container registry.
+When running on a AMD64 based host everything should be fine, but if you want to run on ARM64 then you  will need to rebuild the [verdaccio/verdaccio](https://github.com/verdaccio/verdaccio) container as they only ship AMD64 versions. You will then need to modify the `deployment/deployment.yml` by hand to point to the local build on your private container registry.
+
+```
+      - name: registry
+        image: private.example.com:5000/verdaccio
+        ports:
+        - containerPort: 4873
+        volumeMounts:
+        - name: registry-data
+          mountPath: /verdaccio/storage
+        - name: registry-conf
+          mountPath: /verdaccio/conf
+```
+
 
 ## Deploying
 
