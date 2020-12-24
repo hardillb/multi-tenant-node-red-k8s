@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-red-multi
+  labels:
+    app: nr-mt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nr-mt
+  template:
+    metadata:
+      labels:
+        app: nr-mt
+    spec:
+      containers:
+      - name: node-red-manager
+        image: docker-pi.local:5000/k8s-manager
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: secret
+          mountPath: /usr/src/app/config
+        env:
+        - name: MONGO_URL
+          value: mongodb://mongo/nodered
+        - name: ROOT_DOMAIN
+          value: example.com
+      - name: mongodb
+        image: mongo
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: mongo-data
+          mountPath: /data/db
+      - name: registry
+        image: verdaccio/verdaccio
+        ports:
+        - containerPort: 4873
+      volumes:
+      - name: secret
+        secret:
+          secretName: kube-config
+      - name: mongo-data
+        hostPath:
+          path: /opt/mongo-data
+          type: Directory
