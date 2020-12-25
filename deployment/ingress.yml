@@ -27,7 +27,7 @@ spec:
   - host: "catalogue.example.com"
     http:
       paths:
-        pathType: Prefix
+      - pathType: Prefix
         path: "/"
         backend:
           service:
