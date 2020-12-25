@@ -24,3 +24,13 @@ spec:
             name: registry
             port:
               number: 4873
+  - host: "catalogue.example.com"
+    http:
+      paths:
+        pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: catalogue
+            port:
+              number: 80
