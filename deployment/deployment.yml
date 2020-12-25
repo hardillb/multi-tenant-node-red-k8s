@@ -51,7 +51,7 @@ spec:
         - name: REGISTRY
           value: "registry:4873"
         - name: PORT
-          value: 80
+          value: "80"
       volumes:
       - name: secret
         secret:
