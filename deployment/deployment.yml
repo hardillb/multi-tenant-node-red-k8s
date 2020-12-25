@@ -43,6 +43,15 @@ spec:
           mountPath: /verdaccio/storage
         - name: registry-conf
           mountPath: /verdaccio/conf
+      - name: catalogue
+        image: private.example.com/catalogue
+        ports:
+        - containerPort: 80
+        env:
+        - name: REGISTRY
+          value: "registry:4873"
+        - name: PORT
+          value: 80
       volumes:
       - name: secret
         secret:
