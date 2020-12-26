@@ -25,7 +25,7 @@ $ ./setup.sh example.com private.example.com:5000
 
 ### Build Containers
 
-Both the Custom Node-RED and the management containers need building and pushing to your local private container registry.
+The Custom Node-RED, Management App and Catalogue containers need building and pushing to your local private container registry.
 
 ```
 $ docker build -t private.example.com:5000/custom-node-red ./custom-node-red
