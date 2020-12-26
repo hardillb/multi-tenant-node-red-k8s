@@ -28,7 +28,7 @@ $ ./setup.sh example.com private.example.com:5000
 Both the Custom Node-RED and the management containers need building and pushing to your local private container registry.
 
 ```
-$ docker build -t private.example.com:5000/custom-node-red ./manager
+$ docker build -t private.example.com:5000/custom-node-red ./custom-node-red
 ...
 $ docker push private.example.com:5000/custom-node-red
 ```
@@ -37,6 +37,12 @@ and
 $ docker build -t private.example.com:5000/k8s-manager ./manager
 ...
 $ docker push private.example.com:5000/k8s-manager
+```
+and
+```
+$ docker build -t private.example.com:5000/catalogue ./catalogue
+...
+$ docker push private.example.com:5000/catalogue
 ```
 
 #### Regstiry Container
