@@ -14,6 +14,7 @@ spec:
       labels:
         app: nr-mt
     spec:
+      serviceAccountName: create-pod
       containers:
       - name: node-red-manager
         image: private.example.com/k8s-manager
