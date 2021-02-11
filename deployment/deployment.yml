@@ -19,9 +19,6 @@ spec:
         image: private.example.com/k8s-manager
         ports:
         - containerPort: 3000
-        volumeMounts:
-        - name: secret
-          mountPath: /usr/src/app/config
         env:
         - name: MONGO_URL
           value: mongodb://mongo/nodered
@@ -53,9 +50,6 @@ spec:
         - name: PORT
           value: "80"
       volumes:
-      - name: secret
-        secret:
-          secretName: kube-config
       - name: mongo-data
         hostPath:
           path: /opt/mongo-data
