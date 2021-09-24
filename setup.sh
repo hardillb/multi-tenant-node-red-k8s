@@ -20,6 +20,7 @@ else
 fi
 
 sed -i -e "s!private.example.com!$reg!g" deployment/deployment.yml
+sed -i -e "s!private.example.com!$red!g" manager/config/settings.js
 sed -i -e "s!example.com!$rd!g" deployment/deployment.yml
 sed -i -e "s!example.com!$rd!g" deployment/ingress.yml
 sed -i -e "s!example.com!$rd!g" custom-node-red/settings.js

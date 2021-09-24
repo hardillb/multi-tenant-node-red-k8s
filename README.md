@@ -12,7 +12,7 @@ $ git clone --recurse-submodules https://github.com/hardillb/multi-tenant-node-r
 
 ### Creating secrets and setting domain
 
-Running `./setup.sh` in the root directory of the project will generate a `deployment/secret.yml` file that holds the details for connecting to the Kubernetes API and and the `settings.js` for the management app.
+Running `./setup.sh` in the root directory of the project will generate a `deployment/registry-conf.yml` file that holds the details for securing the registry and and the private container registry in `settings.js` for the management app.
 
 The script takes 2 arguments
 
